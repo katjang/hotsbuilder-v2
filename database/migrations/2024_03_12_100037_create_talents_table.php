@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('hero_id')->constrained();
             $table->string('name');
             $table->text('description');
-            $table->string('image');
-            $table->string('ability');
+            $table->string('icon');
+            $table->string('ability')->nullable();
             $table->unsignedInteger('sort');
             $table->unsignedInteger('cooldown')->nullable();
             $table->unsignedInteger('mana_cost')->nullable();

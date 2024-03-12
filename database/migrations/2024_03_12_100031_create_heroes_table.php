@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('role')->nullable();
             $table->string('type')->nullable();
             $table->date('release_date')->nullable();
-            $table->string('image');
+            $table->string('release_patch')->nullable();
+            $table->string('icon');
             $table->timestamps();
         });
     }
