@@ -108,7 +108,7 @@ class Build extends Model
         return $query->leftJoin('ratings', 'ratings.build_id', '=', 'builds.id')
             ->groupBy('builds.id')
             ->select(DB::raw('AVG(ratings.rating) AS avg_rating'),
-                DB::raw('COUNT(ratings.user_id) AS rating_count'), 'builds.id');
+                DB::raw('COUNT(ratings.user_id) AS rating_count'), 'builds.*');
     }
 
     public static function addFilterParameters($request, $builds)

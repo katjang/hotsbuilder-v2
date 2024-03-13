@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\BuildService;
 use App\Models\Build;
+use App\Models\Hero;
+use App\Models\Map;
 
 class BuildController extends Controller
 {
@@ -25,6 +27,8 @@ class BuildController extends Controller
             ->paginate(20);
 
         Build::addFilterParameters($request, $builds);
+
+        return $builds;
     }
 
     function create(Hero $hero)
@@ -43,7 +47,7 @@ class BuildController extends Controller
 
     function show(Build $build)
     {
-        $build = Build::where('id', $build->id)
+        $build = Build::where('builds.id', $build->id)
             ->with('comments.comments.comments.comments.comments')
             ->withRating()
             ->first();
@@ -52,6 +56,8 @@ class BuildController extends Controller
         $hero->talents = $hero->talents->groupBy('level');
 
         $build->talents = $build->talents->groupBy('level');
+
+        return $build;
     }
 
     function store(SaveBuild $request)
@@ -59,18 +65,15 @@ class BuildController extends Controller
         $build = new Build;
         $build->hero_id = $request->hero_id;
         $this->buildService->saveBuild($request, $build, Auth::user());
-        return redirect()->route('build.show', $build)->with("message", "Build has been created");
     }
 
     function destroy(Build $build)
     {
         $this->buildService->deleteBuild($build);
-        return redirect()->route('user.builds', Auth::user())->with("message", "Build has been deleted");
     }
 
     function update(Build $build, SaveBuild $request)
     {
         $this->buildService->saveBuild($request, $build, Auth::user());
-        return redirect()->route('build.show', $build)->with("message", "Build has been updated");
     }
 }
