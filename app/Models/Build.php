@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Build extends Model
 {
@@ -52,7 +55,7 @@ class Build extends Model
             get: fn () => (Auth::check() && in_array($this->id, Auth::user()->favorites->pluck('id')->toArray()))
         );
     }
-    
+
     public function scopeSearch($query, $search)
     {
         return $query->when($search, function ($query, $search) {
@@ -105,7 +108,7 @@ class Build extends Model
         return $query->leftJoin('ratings', 'ratings.build_id', '=', 'builds.id')
             ->groupBy('builds.id')
             ->select(DB::raw('AVG(ratings.rating) AS avg_rating'),
-                DB::raw('COUNT(ratings.user_id) AS rating_count'), 'builds.*');
+                DB::raw('COUNT(ratings.user_id) AS rating_count'), 'builds.id');
     }
 
     public static function addFilterParameters($request, $builds)

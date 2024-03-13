@@ -21,6 +21,8 @@ class HeroController extends Controller
             ->orderBy('avg_rating', 'desc')
             ->limit(5)
             ->get();
+
+        return $builds;
     }
 
     public function scopeSearch($query, $search)
