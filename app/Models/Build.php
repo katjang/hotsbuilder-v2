@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\Commentable;
 
 class Build extends Model
 {
+    use Commentable;
+    
     protected $guarded = ['user_id', 'hero_id'];
     protected $with = ['talents'];
-    protected $appends = ['is_favorite'];
 
     function user()
     {
@@ -34,11 +36,6 @@ class Build extends Model
         return $this->belongsToMany(Talent::class)->withPivot('note')->orderBy('level');
     }
 
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
-
     public function ratings()
     {
         return $this->belongsToMany(User::class, 'ratings')->withPivot('rating');
@@ -47,13 +44,6 @@ class Build extends Model
     public function maps()
     {
         return $this->belongsToMany(Map::class);
-    }
-
-    public function isFavorite() : Attribute
-    {
-        return new Attribute(
-            get: fn () => (Auth::check() && in_array($this->id, Auth::user()->favorites->pluck('id')->toArray()))
-        );
     }
 
     public function scopeSearch($query, $search)

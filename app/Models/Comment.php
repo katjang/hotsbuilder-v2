@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Commentable;
 
 class Comment extends Model
 {
+    use Commentable;
+    
     protected $with = ['user'];
-
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
 
     public function user()
     {
