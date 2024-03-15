@@ -7,6 +7,7 @@ use App\Services\BuildService;
 use App\Models\Build;
 use App\Models\Hero;
 use App\Models\Map;
+use Inertia\Inertia;
 
 class BuildController extends Controller
 {
@@ -52,12 +53,13 @@ class BuildController extends Controller
             ->withRating()
             ->first();
 
-        $hero = $build->hero;
-        $hero->talents = $hero->talents->groupBy('level');
+        $hero = Hero::where('id', $build->hero_id)->with('abilities')->first();
+        $hero->talents = $hero->groupped_talents;
 
-        $build->talents = $build->talents->groupBy('level');
-
-        return $build;
+        return Inertia::render('Build/Show', [
+            'build' => $build,
+            'hero' => $hero,
+        ]);
     }
 
     function store(SaveBuild $request)

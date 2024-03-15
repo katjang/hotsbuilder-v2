@@ -16,7 +16,12 @@ class Hero extends Model
 
     function talents()
     {
-        return $this->hasMany(Talent::class);
+        return $this->hasMany(Talent::class)->orderBy('level')->orderBy('sort');
+    }
+
+    function getGrouppedTalentsAttribute() 
+    {
+        return $this->talents()->get()->groupBy('level');
     }
 
     public function builds()
