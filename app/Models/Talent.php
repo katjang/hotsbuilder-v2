@@ -10,7 +10,8 @@ class Talent extends Model
     protected $guarded = [];
     protected $table = 'talents';
 
-    function builds(){
+    function builds() 
+    {
         return $this->belongsToMany(Build::class);
     }
 }
