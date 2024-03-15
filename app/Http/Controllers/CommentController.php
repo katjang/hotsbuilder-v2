@@ -33,5 +33,6 @@ class CommentController extends Controller
         // just $comment->with... returns all comments as well as Comment::find($build->id)->with...,
         // which is kinda odd... (one extra query :( i could change route to commentId, but i want to keep the routes consistant)
         $comment = Comment::where('id', $comment->id)->with('comments.comments.comments.comments')->get();
+        return $comment;
     }
 }

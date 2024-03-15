@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\BuildController;
 use App\Http\Controllers\BuildRatingController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\BuildCommentController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\HeroController;
