@@ -1,0 +1,398 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Google icons
+
+.container {
+  max-width: 1000px;
+}
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.main {
+  background: url("/images/background.jpg");
+  -webkit-background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex: 1;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+textarea {
+  height: 100px !important;
+}
+
+
+.fab-button {
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  min-width: 0;
+  padding: 0;
+  flex-shrink: 0;
+  outline: none;
+  border-radius: 50%;
+  color: white;
+  border-width: 0;
+  margin: 0 10px;
+  width: 60px;
+  height: 60px;
+  font-size: 36px;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+
+  &:hover{
+    text-decoration: none;
+    color: white;
+  }
+
+  &-mini{
+    @extend .fab-button;
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+  }
+  background-color: $purple;
+
+}
+
+.icon-button {
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  background-color: transparent;
+  text-align: center;
+  min-width: 0;
+  padding: 0;
+  flex-shrink: 0;
+  outline: none;
+  border-width: 0;
+  margin: 0 10px;
+  width: 60px;
+  height: 60px;
+  color: $purple;
+  i {
+    color: $purple;
+  }
+
+  //&.favorite{
+  //  color: $purple;
+  //}
+  //&.edit{
+  //  color: $purple;
+  //}
+  //&.delete{
+  //  color: $purple;
+  //}
+  &:hover {
+    text-decoration: none;
+  }
+  &-mini {
+    @extend .icon-button;
+    width: 35px;
+    height: 35px;
+  }
+
+}
+
+#app {
+  min-height: 100vh;
+}
+.hero {
+  @extend .game-border;
+  margin: 10px;
+  flex: 1;
+  flex-grow: 0;
+
+  &-detail{
+    color: white;
+    h3{
+      img{
+        width: 40px;
+      }
+    }
+  }
+}
+
+.game-border {
+
+  background: linear-gradient(#14324A,#43286b);
+  padding: 3px;
+  position: relative;
+  -webkit-transition: color 0.3s;
+  -moz-transition: color 0.3s;
+  -ms-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+
+  color: white;
+  a{
+    color: white;
+  }
+
+  &:hover{
+    & > div:not(.content){
+      color: $dark;
+    }
+    &:before{
+      opacity: 1;
+    }
+    a{
+      text-decoration: none;
+    }
+  }
+  & > .content{
+    background-color: $dark;
+    height: 100%;
+    position: relative;
+  }
+  &.selected{
+    background: linear-gradient($select,$select-dark);
+  }
+
+  &:before{
+    content: '';
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    position: absolute;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;
+    -ms-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    background: linear-gradient($highlight,$highlight-dark);
+  }
+}
+
+
+
+.build-list {
+  margin-top: 15px;
+  cursor: pointer;
+  @extend .game-border;
+
+  box-shadow: 0 0 1rem #000;
+  h5{
+    font-weight: bold;
+    margin: 5px 0;
+  }
+//   @include media-breakpoint-down(sm) {
+//     .content{
+//       img{
+//         height: 50px;
+//       }
+//     }
+//   }
+}
+
+.tooltip-description {
+  display: none;
+  position: absolute;
+  padding: 5px;
+  background: $dark;
+  top: 120%;
+  left: 0;
+  z-index: 100;
+  max-width: 300px;
+  color: white;
+  width: max-content;
+}
+
+.talent {
+  @extend .game-border;
+  margin: 3px;
+  cursor: pointer;
+
+  &:hover{
+    .tooltip-description {
+      display: block;
+    }
+  }
+
+  &.compact {
+    height: 56px;
+    img {
+      max-height: 100%;
+    }
+    // @include media-breakpoint-down(sm) {
+    //   height: 36px;
+    // }
+  }
+
+  &.static {
+    pointer-events:none;
+  }
+}
+
+.map {
+  @extend .game-border;
+  margin: 10px;
+  width: 400px;
+  cursor: pointer;
+  padding: 5px;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 10px;
+  }
+  h2 {
+    color: #6cf;
+  }
+  &.compact {
+    height: 100px;
+    width: fit-content;
+    img {
+      max-height: 100%;
+    }
+  }
+
+  &:hover {
+    .tooltip-description {
+      display: block;
+    }
+    a{
+      text-decoration: none;
+    }
+  }
+
+  &.icon {
+    height: 50px;
+    padding: 3px;
+    margin: 3px;
+    width: fit-content;
+    img {
+      max-height: 100%;
+    }
+    // @include media-breakpoint-down(sm) {
+    //   height: 36px;
+    // }
+  }
+
+  &.static {
+    pointer-events:none;
+  }
+}
+
+.ability {
+  color: white;
+  width: 64px;
+  height: 64px;
+  margin: 5px;
+  padding: 3px;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment {
+  @extend .game-border;
+  padding: 1px;
+  margin: 5px 0;
+}
+
+.replies {
+  padding-left: 30px;
+}
+.filter {
+  color: white;
+}
+
+.flash-message {
+  z-index: 1;
+  position: fixed;
+  max-width: 275px;
+  right: 10px;
+  bottom: 0;
+  margin: 0;
+  transform: translateY(100%);
+  -webkit-transition: transform ease-in-out 0.5s;
+  -moz-transition: transform ease-in-out 0.5s;
+  -ms-transition: transform ease-in-out 0.5s;
+  -o-transition: transform ease-in-out 0.5s;
+  transition: transform ease-in-out 0.5s;
+}
+
+.flash-message.show {
+  transform: translateY(-10px);
+}
+
+.rating {
+  &.compact {
+    img {
+      height: 20px;
+    }
+  }
+
+}
+
+.push-ends {
+  margin: 15px 0;
+}
+
+.push-top {
+  margin-top: 15px;
+}
+
+.push-bottom {
+  margin-bottom: 15px;
+}
+
+.push-left {
+  margin-left: 15px;
+}
+
+.push-right {
+  margin-right: 15px;
+}
+
+.build, .comments {
+  color: white;
+}
+
+.white-text {
+  color: white;
+}
+
+.moderator-icon {
+  height: 23px;
+}
+
+.builds {
+  margin-bottom: 150px;
+}

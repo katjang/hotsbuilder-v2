@@ -33,7 +33,7 @@ class MapSeeder extends Seeder
 
         foreach($maps as $map){
             $tmap = [];
-            $tmap['image'] = 'img/maps/'. strtolower(str_replace(' ', '-', $map)) . '.jpg';
+            $tmap['image'] = strtolower(str_replace(' ', '-', $map)) . '.jpg';
             $tmap['name'] = $map;
             Map::create($tmap);
         }

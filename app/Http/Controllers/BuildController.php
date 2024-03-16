@@ -49,7 +49,7 @@ class BuildController extends Controller
     function show(Build $build)
     {
         $build = Build::where('builds.id', $build->id)
-            ->with('comments.comments.comments.comments.comments')
+            ->with('comments.comments.comments.comments.comments', 'maps')
             ->withRating()
             ->first();
 
