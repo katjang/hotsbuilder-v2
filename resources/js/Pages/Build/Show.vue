@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import HeroDetail from '@/Components/Hero/Detail.vue';
+import HeroDetail from '@/Components/Hero/HeroDetail.vue';
+import Rating from '@/Components/Rating.vue';
+import CompactMap from '@/Components/Maps/Compact.vue';
+import Talent from '@/Components/Hero/Talent.vue';
+import Comment from "@/Components/Comment.vue";
 
 const props = defineProps<{
     build: any,
@@ -11,20 +15,20 @@ const props = defineProps<{
 <template>
     <Head title="Build" />
 
-    <div class="container">
+    <div class="container mx-auto px-4 py-4">
         <HeroDetail :hero="hero"/>
-        <div class="build">
-            <div class="d-flex push-top">
-                <div class="flex-fill">
-                    <h2>{{ build.title }}</h2>
-                    <p>{{ build.description }}</p>
+        <div class="build mt-6">
+            <div class="flex">
+                <div class="grow">
+                    <h2 class="text-3xl">{{ build.title }}</h2>
+                    <p class="text-xl">{{ build.description }}</p>
                 </div>
-                <div class="d-flex">
+                <div class="flex">
                     <div>
-                        <div class="push-right">
+                        <div>
                             <span>{{ build.rating_count }} votes</span>
                         </div>
-                        <!-- @include('partials.rating._default', ['rating' => $build->avg_rating, 'extraClass' => '']) -->
+                        <Rating :rating="build.avg_rating"/>
                     </div>
                     <div class="d-flex align-items-center">
                         <!-- @can('update', $build)
@@ -38,25 +42,12 @@ const props = defineProps<{
                     </div>
                 </div>
             </div>
-            <div class="d-flex flex-wrap">
-                <div class="col-12 col-lg-6" v-for="(talents, level) in hero.talents">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div v-for="(talents, level) in hero.talents">
                     <div>
-                        <h3>Level {{level}}:</h3>
+                        <h3 class="text-3xl">Level {{level}}:</h3>
                     </div>
-                    <div class="form-group d-flex flex-column" v-for="talent in talents">
-                        <div class="talent static" :class="{'selected': build.talents.indexOf(talent) > -1}">
-                            <div class="content">
-                                <div class="d-flex">
-                                    <h4><img class="d-inline-block" :src="talent.image" :alt="talent.name"> {{ talent.name }}</h4>
-                                </div>
-                                <div class="col-12">
-                                    <p>
-                                        {{talent.description}}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Talent v-for="talent in talents" :talent="talent" :selected="build.talents.map((b:any) => b.id).indexOf(talent.id) > -1"/>
                     <div>
                         <p>
                             {{build.talents.find((t: any) => t.level == level).pivot.note}}
@@ -64,12 +55,10 @@ const props = defineProps<{
                     </div>
                 </div>
             </div>
-            <div class="col-12" v-if="build.maps">
-                <h2>Good maps for this build</h2>
-                <div class="d-flex flex-wrap">
-                    <!-- @foreach($build->maps as $map)
-                        @include('partials.map._compact', $map)
-                    @endforeach -->
+            <div v-if="build.maps" class="mt-4">
+                <h2 class="text-xl">Good maps for this build:</h2>
+                <div class="flex">
+                    <CompactMap v-for="map in build.maps" :map="map"/>
                 </div>
             </div>
         </div>
@@ -80,6 +69,10 @@ const props = defineProps<{
                 @include('partials.rating._default', ['rating' => 0, 'extraClass' => 'rating-store'])
             {{Form::close()}}
         </div> -->
-        <!-- @include('partials.comment._comments', ['comments' => $build->comments]) -->
+        <div class="comments mt-6">
+            <h3 class="text-2xl">Comments</h3>
+            <Comment v-for="aComment in build.comments" :comment="aComment" />
+        </div>
+        
     </div>
 </template>
